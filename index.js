@@ -33,6 +33,17 @@ app.post('/api/mensajes', async (req, res) => {
   }
 });
 
+// GET para consultar todos los mensajes
+app.get('/api/mensajes', async (req, res) => {
+  try {
+    const mensajes = await Message.find().sort({ fecha: -1 }); // más recientes primero
+    res.json(mensajes);
+  } catch (error) {
+    console.error('Error al obtener mensajes:', error);
+    res.status(500).json({ error: 'Error al consultar mensajes' });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('API activa');
 });
